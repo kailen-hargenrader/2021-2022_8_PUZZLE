@@ -18,7 +18,7 @@ public class BoardTest {
 	public void setUp() throws Exception {
 		board = generateBoard("puzzle00.txt");
 		board2 = generateBoard("puzzle01.txt");
-		board3 = generateBoard("puzzle07.txt");
+		board3 = generateBoard("puzzle18.txt");
 	}
 
 	private Board generateBoard(String filename) {

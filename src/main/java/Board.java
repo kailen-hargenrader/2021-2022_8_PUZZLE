@@ -1,7 +1,17 @@
 import java.util.Arrays;
 
+/**
+ * A Board on which to play 8 puzzle.
+ * @author monke
+ *
+ */
 public class Board {
-	private int[][] Blocks;
+	private int[][] Blocks; //The positions of the numbers
+	
+	/**
+	 * Initiates Board
+	 * @param blocks the initial state
+	 */
 	public Board(int[][] blocks) {
 		// construct a board from an n-by-n array of blocks
 		// (where blocks[i][j] = block in row i, column j)
@@ -11,11 +21,20 @@ public class Board {
 			Blocks[i] = blocks[i].clone();
 		}
 	}
-
+	
+	/**
+	 * The size of one side of the board.
+	 * @return length of board
+	 */
 	public int dimension() {
 		// board dimension n
 		return Blocks.length;
 	}
+	
+	/**
+	 * The number of blocks out of place
+	 * @return number of blocks out of place
+	 */
 	public int hamming() {
 		// number of blocks out of place
 		int count = 1;
@@ -30,6 +49,11 @@ public class Board {
 		}
 		return num;
 	}
+	
+	/**
+	 * The total distance that the blocks are out of place
+	 * @return distance of blocks out of place
+	 */
 	public int manhattan() {
 		// sum of Manhattan distances between blocks and goal
 		int count = 1;
@@ -56,7 +80,11 @@ public class Board {
 		}
 		return num;
 	}
-
+	
+	/**
+	 * Did you win?
+	 * @return Won?
+	 */
 	public boolean isGoal() {
 		// is this board the goal board?
 		int count = 1;
@@ -69,6 +97,11 @@ public class Board {
 		}
 		throw new ArithmeticException("How did you get here?");
 	}
+	
+	/**
+	 * Creates a twin of the board whose solvability is opposite board
+	 * @return a twin with one pair of numbers switched
+	 */
 	public Board twin() {
 		// a board that is obtained by exchanging any pair of blocks
 		if(Blocks.length == 1 || Blocks.length == 0) throw new NullPointerException("No blocks to exchange.");
@@ -88,6 +121,10 @@ public class Board {
 		}
 		return new Board(temp);
 	}
+	
+	/**
+	 * Override equals method to include boards that have the same number arrangement
+	 */
 	public boolean equals(Object y) {
 		// does this board equal y?
 		if(this == y) return true;
@@ -98,6 +135,11 @@ public class Board {
 		}
 		return false;
 	}
+	
+	/**
+	 * return board states with blank in adjacent locations
+	 * @return neighbors with blanks in adjacent tiles
+	 */
 	public Iterable<Board> neighbors() {
 		// all neighboring boards
 		int row = 0;
@@ -201,6 +243,10 @@ public class Board {
 		}
 		return Arrays.asList(boards);
 	}
+	
+	/**
+	 * String representation
+	 */
 	public String toString() {
 		// string representation of this board (in the output format specified below)
 		StringBuilder s = new StringBuilder();

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import edu.princeton.cs.algs4.MinPQ;
 public class Solver {
@@ -11,9 +12,10 @@ public class Solver {
 
 	public Solver(Board initial) {
 		// find a solution to the initial board (using the A* algorithm)
-		pq = new MinPQ<SearchNode>();
+		SearchNodeComparator compare = new SearchNodeComparator();
+		pq = new MinPQ<SearchNode>(compare);
 		pq.insert(new SearchNode(initial, null, 0));
-		twinPQ = new MinPQ<SearchNode>();
+		twinPQ = new MinPQ<SearchNode>(compare);
 		twinPQ.insert(new SearchNode(initial.twin(), null, 0));
 		past = new ArrayList<Board>();
 		past.add(initial);
@@ -68,7 +70,7 @@ public class Solver {
 		// solve a slider puzzle (given below)
 	}
 }
-class SearchNode implements Comparable<SearchNode>{
+class SearchNode {
 	private int numMoves;
 	private Board now;
 	private SearchNode prev;
@@ -92,17 +94,24 @@ class SearchNode implements Comparable<SearchNode>{
 	public int getManhattan() {
 		return manhattan;
 	}
+
+
+}
+class SearchNodeComparator implements Comparator<SearchNode>{
+
 	@Override
-	public int compareTo(SearchNode o) {
-		if(o.getMoves()+o.getManhattan() > this.getMoves()+this.getManhattan()) return -1;
-		else if(o.getMoves()+o.getManhattan() > this.getMoves()+this.getManhattan()) return 1;
+	public int compare(SearchNode o1, SearchNode o2) {
+		if(o1.getMoves()+o1.getManhattan() < o2.getMoves()+o2.getManhattan()) return -1;
+		else if(o1.getMoves()+o1.getManhattan() > o2.getMoves()+o2.getManhattan()) return 1;
 		else {
-			if(o.getManhattan() < this.getManhattan()) return 1;
-			else if(o.getManhattan() > this.getManhattan()) return -1;
-			return 0;
+			if(o1.getManhattan() > o2.getManhattan()) return 1;
+			else if(o1.getManhattan() < o2.getManhattan()) return -1;
+			else {
+				if(o1.getNow().hamming() > o2.getNow().hamming()) return 1;
+				else if(o1.getNow().hamming() < o2.getNow().hamming()) return -1;
+				return 0;
+			}
 		}
-		
 	}
-
-
+	
 }
