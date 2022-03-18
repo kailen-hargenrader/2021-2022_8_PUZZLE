@@ -36,7 +36,7 @@ public class Solver {
 				}
 			}
 			//System.out.println(pq.min().getNow());
-			System.out.println(past.size());
+			//System.out.println(past.size());
 		}
 	}
 	public boolean isSolvable() {
