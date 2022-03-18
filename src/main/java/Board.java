@@ -7,7 +7,9 @@ public class Board {
 		// (where blocks[i][j] = block in row i, column j)
 		if(blocks == null) throw new IllegalArgumentException("blocks cannot be null");
 		Blocks = new int[blocks.length][blocks.length];
-		Blocks = blocks.clone();
+		for(int i = 0; i < blocks.length; i++) {
+			Blocks[i] = blocks[i].clone();
+		}
 	}
 
 	public int dimension() {
@@ -71,7 +73,9 @@ public class Board {
 		// a board that is obtained by exchanging any pair of blocks
 		if(Blocks.length == 1 || Blocks.length == 0) throw new NullPointerException("No blocks to exchange.");
 		int[][] temp = new int[Blocks.length][Blocks.length];
-		temp = Blocks.clone();
+		for(int i =0; i < Blocks.length; i++) {
+			temp[i] = Blocks[i].clone();
+		}
 		if(temp[0][0] == 0 || temp [0][1] == 0) {
 			int Int = temp[1][0];
 			temp[1][0] = temp[1][1];
@@ -105,6 +109,7 @@ public class Board {
 				row++;
 				col = 0;
 			}
+
 		}
 		if(row != 0 && row != dimension()-1) {
 			if(col != 0 && col != dimension()-1){
@@ -118,11 +123,11 @@ public class Board {
 				boards[2].Blocks[row+1][col] = 0;
 				
 				boards[3] = new Board(Blocks);
-				boards[3].Blocks[row][col] = boards[1].Blocks[row][col+1];
+				boards[3].Blocks[row][col] = boards[3].Blocks[row][col+1];
 				boards[3].Blocks[row][col+1] = 0;
 				
 				boards[0] = new Board(Blocks);
-				boards[0].Blocks[row][col] = boards[1].Blocks[row][col-1];
+				boards[0].Blocks[row][col] = boards[0].Blocks[row][col-1];
 				boards[0].Blocks[row][col-1] = 0;
 			}
 			else {
@@ -137,12 +142,12 @@ public class Board {
 				
 				if(col == 0) {
 					boards[0] = new Board(Blocks);
-					boards[0].Blocks[row][col] = boards[1].Blocks[row][col+1];
+					boards[0].Blocks[row][col] = boards[0].Blocks[row][col+1];
 					boards[0].Blocks[row][col+1] = 0;
 				}
 				else {
 					boards[0] = new Board(Blocks);
-					boards[0].Blocks[row][col] = boards[1].Blocks[row][col-1];
+					boards[0].Blocks[row][col] = boards[0].Blocks[row][col-1];
 					boards[0].Blocks[row][col-1] = 0;
 				}
 				
@@ -164,33 +169,32 @@ public class Board {
 				}
 				
 				boards[2] = new Board(Blocks);
-				boards[2].Blocks[row][col] = boards[1].Blocks[row][col+1];
+				boards[2].Blocks[row][col] = boards[2].Blocks[row][col+1];
 				boards[2].Blocks[row][col+1] = 0;
 				
 				boards[0] = new Board(Blocks);
-				boards[0].Blocks[row][col] = boards[1].Blocks[row][col-1];
+				boards[0].Blocks[row][col] = boards[0].Blocks[row][col-1];
 				boards[0].Blocks[row][col-1] = 0;
 			}
 			else {
 				boards = new Board[2];
+				boards[0] = new Board(Blocks);
+				boards[1] = new Board(Blocks);
 				if(row == 0) {
-					boards[1] = new Board(Blocks);
 					boards[1].Blocks[row][col] = boards[1].Blocks[row+1][col];
 					boards[1].Blocks[row+1][col] = 0;
 				}
 				else {
-					boards[1] = new Board(Blocks);
 					boards[1].Blocks[row][col] = boards[1].Blocks[row-1][col];
 					boards[1].Blocks[row-1][col] = 0;
 				}
 				if(col == 0) {
-					boards[0] = new Board(Blocks);
-					boards[0].Blocks[row][col] = boards[1].Blocks[row][col+1];
+					boards[0].Blocks[row][col] = boards[0].Blocks[row][col+1];
 					boards[0].Blocks[row][col+1] = 0;
+					
 				}
 				else {
-					boards[0] = new Board(Blocks);
-					boards[0].Blocks[row][col] = boards[1].Blocks[row][col-1];
+					boards[0].Blocks[row][col] = boards[0].Blocks[row][col-1];
 					boards[0].Blocks[row][col-1] = 0;
 				}
 			}
