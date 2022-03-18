@@ -52,12 +52,14 @@ public class Solver {
 	public Iterable<Board> solution() {
 		// sequence of boards in a shortest solution; null if unsolvable
 		if(isSolvable()) {
-			path = new Board[moves()];
+			path = new Board[moves()+1];
 			SearchNode current = pq.min();
-			for(int i = 0; i<moves();i++) {
+			for(int i = moves(); i>0;i--) {
 				path[i] = current.getNow();
 				current = current.getPrev();
 			}
+			path[0] = current.getNow();
+			
 			return Arrays.asList(path);
 		}
 		return null;
@@ -94,7 +96,12 @@ class SearchNode implements Comparable<SearchNode>{
 	public int compareTo(SearchNode o) {
 		if(o.getMoves()+o.getManhattan() > this.getMoves()+this.getManhattan()) return -1;
 		else if(o.getMoves()+o.getManhattan() > this.getMoves()+this.getManhattan()) return 1;
-		return 0;
+		else {
+			if(o.getManhattan() < this.getManhattan()) return 1;
+			else if(o.getManhattan() > this.getManhattan()) return -1;
+			return 0;
+		}
+		
 	}
 
 
