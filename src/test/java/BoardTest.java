@@ -68,7 +68,6 @@ public class BoardTest {
 		@Test
 		public void testTwin() {
 			Board twin = board.twin();
-			System.out.println(twin);
 			assertTrue("Hamming of Twin should be 2, was " + twin.hamming(), twin.hamming() == 2);
 			assertTrue("manhattan of Twin should be 2, was " + twin.manhattan(), twin.manhattan() == 2);
 		}
@@ -81,7 +80,6 @@ public class BoardTest {
 			Nums[1][0] = 3;
 			Nums[1][1] = 2;
 			Board clone = new Board(Nums);
-			System.out.println(clone);
 			assertTrue("boards should be equal", board2.equals(clone));
 		}
 	}
