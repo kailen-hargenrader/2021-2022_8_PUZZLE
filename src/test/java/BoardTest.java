@@ -18,7 +18,7 @@ public class BoardTest {
 	public void setUp() throws Exception {
 		board = generateBoard("puzzle00.txt");
 		board2 = generateBoard("puzzle01.txt");
-		board3 = generateBoard("puzzle18.txt");
+		board3 = generateBoard("puzzle3x3-unsolvable.txt");
 	}
 
 	private Board generateBoard(String filename) {
@@ -30,10 +30,9 @@ public class BoardTest {
 			for (int j = 0; j < n; j++)
 				blocks[i][j] = in.readInt();
 		Board initial = new Board(blocks);
-
 		// solve the puzzle
+		
 		Solver solver = new Solver(initial);
-
 		// print solution to standard output
 		if (!solver.isSolvable()) StdOut.println("No solution possible");
 		else {
