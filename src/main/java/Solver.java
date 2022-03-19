@@ -5,14 +5,18 @@ import java.util.Comparator;
 import edu.princeton.cs.algs4.MinPQ;
 
 /**
- * 
+ * Solves 8 puzzle
  * @author monke
  *
  */
 public class Solver {
 	private ArrayList<Board> path;
 	private boolean solvable;
-
+	
+	/**
+	 * Initiates Solver class
+	 * @param initial initial board
+	 */
 	public Solver(Board initial) {
 		// find a solution to the initial board (using the A* algorithm)
 		if(initial == null) throw new IllegalArgumentException("Starting board cannot be null.");
@@ -20,6 +24,10 @@ public class Solver {
 		
 	}
 	
+	/**
+	 * Solves 8 puzzle using a priority queue
+	 * @param initial initial board
+	 */
 	private void Solved(Board initial) {
 		MinPQ<SearchNode> pq = new MinPQ<SearchNode>(new SearchNodeComparator());
 		MinPQ<SearchNode> twinPQ = new MinPQ<SearchNode>(new SearchNodeComparator());
@@ -54,11 +62,20 @@ public class Solver {
 		}
 		Collections.reverse(path);
 	}
+	
+	/**
+	 * Is the board solvable
+	 * @return solvable?
+	 */
 	public boolean isSolvable() {
 		// is the initial board solvable?
 		return solvable;
 	}
 	
+	/**
+	 * How many moves until solved
+	 * @return number of moves till solved
+	 */
 	public int moves() {
 		// min number of moves to solve initial board; -1 if unsolvable
 		if(isSolvable()) return path.size()-1;
@@ -66,6 +83,10 @@ public class Solver {
 
 	}
 	
+	/**
+	 * Array of board states leading to solve
+	 * @return path to solve
+	 */
 	public Iterable<Board> solution() {
 		// sequence of boards in a shortest solution; null if unsolvable
 		if(isSolvable()) {
@@ -79,12 +100,23 @@ public class Solver {
 	}
 }
 
+/**
+ * A node with a board, a previous board, and the moves taken so far
+ * @author monke
+ *
+ */
 class SearchNode {
 	private final int numMoves;
 	private final Board now;
 	private final SearchNode prev;
 	private final int manhattan;
 	
+	/**
+	 * initiates SearchNode class
+	 * @param b current board
+	 * @param last last board
+	 * @param p number of moves so far
+	 */
 	public SearchNode(Board b, SearchNode last, int p) {
 		
 		numMoves = p;
@@ -92,28 +124,51 @@ class SearchNode {
 		prev = last;
 		manhattan = b.manhattan();
 	}
-
+	
+	/**
+	 * returns current board
+	 * @return current board
+	 */
 	public Board getNow() {
 		return now;
 	}
+	
+	/**
+	 * Returns current number of moves
+	 * @return number of moves
+	 */
 	public int getMoves() {
 		return numMoves;
 	}
+	
+	/**
+	 * Returns previous node
+	 * @return last node
+	 */
 	public SearchNode getPrev() {
 		return prev;
 	}
+	
+	/**
+	 * returns the manhattan distance of current node
+	 * @return manhattan distance
+	 */
 	public int getManhattan() {
 		return manhattan;
 	}
 
 
 }
+
+/**
+ * Creates method for comparing SearchNodes by Manhattan distance
+ * @author monke
+ *
+ */
 class SearchNodeComparator implements Comparator<SearchNode>{
 
 	@Override
 	public int compare(SearchNode o1, SearchNode o2) {
-		//if(o1.getManhattan()+o1.getMoves()-o2.getManhattan()-o2.getMoves() != 0) return o1.getManhattan()+o1.getMoves()-o2.getManhattan()-o2.getMoves();
-		//else return o1.getManhattan()-o2.getManhattan();
 		return o1.getManhattan()+o1.getMoves()-o2.getManhattan()-o2.getMoves();
 	}
 	
